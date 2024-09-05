@@ -20,6 +20,7 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Controllers
             return View(await _context.Product.ToListAsync());
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -30,7 +31,9 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _context.AddAsync(product);
+                _context.Add(product);
+                await _context.SaveChangesAsync();
+                ViewData["Message"] = product.Name + " was added successfully!";
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
@@ -51,8 +54,9 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Update(product);
+                _context.Product.Update(product);
                 await _context.SaveChangesAsync();
+                TempData["Message"] = product.Name + " was updated successfully!";
 
                 return RedirectToAction(nameof(Index));
             }
@@ -61,8 +65,7 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var product = await _context.Product
-                .FirstOrDefaultAsync(m => m.ProductId == id);
+            Product? product = await _context.Product.FindAsync(id);
 
             if (product == null)
             {
@@ -76,8 +79,16 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             Product? product = await _context.Product.FindAsync(id);
-            _context.Product.Remove(product);
-            return RedirectToAction(nameof(Index));
+            if (product != null)
+            {
+                _context.Product.Remove(product);
+                await _context.SaveChangesAsync();
+                TempData["Message"] = product.Name + " was deleted successfully!";
+                return RedirectToAction("Index");
+            }
+
+            TempData["Message"] = "Product not found!";
+            return RedirectToAction("Index");
         }
 
         private bool ProductExists(int id)
