@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// Ignore Spelling: CPW Aspnet
+
+using System.ComponentModel.DataAnnotations;
 
 namespace CPW219_AspnetMVC_CRUD_Debugging.Models
 {
@@ -9,7 +11,7 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Models
 
         [Required]
         [StringLength(35)]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [DataType(DataType.Currency)]
         public double Price { get; set; }
