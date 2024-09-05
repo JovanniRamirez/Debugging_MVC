@@ -33,7 +33,7 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Controllers
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
-                ViewData["Message"] = product.Name + " was added successfully!";
+                
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
@@ -56,7 +56,7 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Controllers
             {
                 _context.Product.Update(product);
                 await _context.SaveChangesAsync();
-                TempData["Message"] = product.Name + " was updated successfully!";
+                
 
                 return RedirectToAction(nameof(Index));
             }
@@ -83,7 +83,7 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Controllers
             {
                 _context.Product.Remove(product);
                 await _context.SaveChangesAsync();
-                TempData["Message"] = product.Name + " was deleted successfully!";
+                
                 return RedirectToAction("Index");
             }
 
