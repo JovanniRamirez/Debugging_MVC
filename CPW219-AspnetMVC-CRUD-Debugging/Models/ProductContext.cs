@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// Ignore Spelling: CPW Aspnet
+
+using Microsoft.EntityFrameworkCore;
 
 namespace CPW219_AspnetMVC_CRUD_Debugging.Models
 {
